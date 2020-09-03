@@ -24,6 +24,8 @@ You can also embed plots, for example:
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
-{Lab1}()
+[Lab1](New-lab-1.html)
+
+
 
 
