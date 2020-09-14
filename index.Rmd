@@ -14,6 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 * 1 : [Introduction to R and Reproducible Research](New-lab-1.html)
 * 2 : [git, GitHub and Rstudio project](Lab2)
+* 3: [Data Wrangling](Evo_Geno_Lab3_Data_Wrangling.Rmd) 
+* 3A: [Data Wrangling](Evo_Geno_Lab3A_Data_Wrangling.Rmd)
+* 3B: [Data Wrangling](Evo_Geno_Lab3B_Data_Wrangling.Rmd)
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
