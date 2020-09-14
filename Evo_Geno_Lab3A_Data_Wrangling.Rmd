@@ -1,0 +1,103 @@
+---
+title: "Evo_Geno_Lab3A_Data_Wrangling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+surveys <- read.csv("data/portal_data_joined.csv")
+```
+```{r}
+head(surveys)
+```
+```{r}
+View(surveys)
+```
+```{r, eval=FALSE}
+surveys <- read.csv("data/portal_data_joined.csv")
+```
+
+### Exercise 1
+```{r}
+surveys[200,]
+```
+
+### Exercise 2
+```{r}
+n_rows<- nrow(surveys)
+surveys_last<- surveys[n_rows, ]
+surveys_last
+```
+
+### Exercise 3
+```{r}
+surveys_middle<- surveys[n_rows / 2, ]
+surveys_middle
+```
+
+### Exercise 4
+```{r}
+head_surveys <- surveys[-(7:n_rows), ]
+head_surveys
+```
+
+### Ex 5
+```{r}
+levels(sex)[2:3] <- c("female","male")
+levels(sex)
+```
+
+### Ex 6
+```{r}
+sex <- factor(sex, levels = c("female", "male", "undetermined"))
+plot(sex)
+```
+
+### Ex 7
+```{r}
+animal_data <- data.frame(
+          animal=c("dog","cat","sea cucumber","sea urchin"),
+          feel=c("furry", "squishy", "spiny"),
+          weight=c(45, 8, 1.1, 0.8) )
+```
+### EX 8
+```{r}
+country_climate <- data.frame(
+       country = c("Canada", "Panama", "South Africa", "Australia"),
+       climate = c(cold, hot, temperate, hot/temperate),
+       temperature = c(10, 30, 18, 15),
+       northern_hemisphere = c(TRUE, TRUE, FALSE, FALSE),
+       has_kangaroo = c(FALSE, FALSE, FALSE, TRUE)
+      )
+
+```
+
+
+

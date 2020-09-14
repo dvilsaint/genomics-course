@@ -1,5 +1,6 @@
 ---
 title: "Dvil lab 2"
+author: "Danaiijah Vilsaint"
 output: html_document
 Bibliography: references.bib
 
