@@ -70,31 +70,26 @@ head_surveys
 
 ### Ex 5
 ```{r}
-levels(sex)[2:3] <- c("female","male")
-levels(sex)
-```
-
-### Ex 6
-```{r}
+levels(sex)[2:3] <- c("female", "male")
 sex <- factor(sex, levels = c("female", "male", "undetermined"))
 plot(sex)
 ```
 
-### Ex 7
+### Ex 6
 ```{r}
 animal_data <- data.frame(
           animal=c("dog","cat","sea cucumber","sea urchin"),
-          feel=c("furry", "squishy", "spiny"),
+          feel=c("furry", "furry","squishy", "spiny"),
           weight=c(45, 8, 1.1, 0.8) )
 ```
-### EX 8
+### EX 7
 ```{r}
 country_climate <- data.frame(
        country = c("Canada", "Panama", "South Africa", "Australia"),
-       climate = c(cold, hot, temperate, hot/temperate),
-       temperature = c(10, 30, 18, 15),
-       northern_hemisphere = c(TRUE, TRUE, FALSE, FALSE),
-       has_kangaroo = c(FALSE, FALSE, FALSE, TRUE)
+       climate = c("cold", "hot", "temperate", "hot/temperate"),
+       temperature = c("10", "30", "18", "15"),
+       northern_hemisphere = c("TRUE", "TRUE", "FALSE", "FALSE"),
+       has_kangaroo = c("FALSE", "FALSE", "FALSE", "TRUE")
       )
 
 ```
