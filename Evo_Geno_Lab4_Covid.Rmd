@@ -16,11 +16,11 @@ library(tidyverse)
 report_03_11_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-11-2020.csv")) %>%
   rename(Country_Region = "Country/Region", Province_State = "Province/State")
 ```
-```{r}
+```{r, eval=FALSE}
 str(report_03_11_2020)
 ```
 
-```{r}
+```{r, eval=FALSE}
 View(report_03_11_2020)
 ```
 ```{r}
@@ -41,10 +41,10 @@ report_03_11_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISan
 ```{r}
 str(report_09_13_2020)
 ```
-```{r}
+```{r, eval=FALSE}
 View(report_09_13_2020)
 ```
-```{r}
+```{r, eval=FALSE}
 View(report_03_11_2020)
 ```
 
@@ -72,7 +72,7 @@ View(Deaths)
 
 
 
-```{r}
+```{r, eval=FALSE}
 country2<-report_03_11_2020%>%group_by(Country_Region) %>% summarise(Confirmed= sum(Confirmed))
 ```
 ```{r, eval=FALSE}
@@ -82,42 +82,42 @@ slice(1:10)
 View(Confirmed)
 ```
 ### Exercise 5 March
-```{r}
+```{r, eval=FALSE}
 ggplot(data = Death, aes(x = Country_Region , y= Deaths, color = Country_Region)) + geom_point() + theme(legend.position="none") #+ labs( x= ", y="Deaths")
 
 ggplot(data = Confirmed, aes(x = Country_Region , y= Confirmed, color = Country_Region)) + geom_point() + theme(legend.position="none") #+ labs( x= "Days", y="Confirmed")
 ```
 ### Exercise 6 March
-```{r}
+```{r, eval=FALSE}
 ggplot(data = US, aes(x = Province_State , y= Deaths, color = Province_State)) + geom_bar(stat="identity") + theme(legend.position="none") 
 ```
 
-```{r}
+```{r, eval=FALSE}
 country3<-report_09_13_2020%>%group_by(Country_Region) %>% summarise(Deaths= sum(Deaths))
 ```
-```{r}
+```{r, eval=FALSE}
 Deaths2<-country3%>%
 arrange(desc(Deaths))%>%
 slice(1:10)
 View(Deaths)
 ```
-```{r}
+```{r, eval=FALSE}
 country4<-report_09_13_2020%>%group_by(Country_Region) %>% summarise(Confirmed= sum(Confirmed))
 ```
-```{r}
+```{r, eval=FALSE}
 Confirmed2<-country4%>%
 arrange(desc(Confirmed))%>%
 slice(1:10)
 View(Confirmed)
 ```
-```{r}
+```{r, eval=FALSE}
 (US2<-report_09_13_2020)%>%
 filter(Country_Region=="US") %>% 
 group_by(Province_State) %>% 
 summarise(Deaths= sum(Deaths)) %>% 
 slice(1:10)
 ```
-```{r}
+```{r, eval=FALSE}
 (US3<-report_09_13_2020)%>%
 filter(Country_Region=="US") %>% 
 group_by(Province_State) %>% 
@@ -127,17 +127,17 @@ slice(1:10)
 
 
 ### Exercise 5 September 
-```{r}
+```{r, eval=FALSE}
 ggplot(data = Deaths2, aes(x = Country_Region , y= Deaths, color = Country_Region)) + geom_point() + theme(legend.position="none") #+ labs( x= ", y="Deaths")
 
 ggplot(data = Confirmed2, aes(x = Country_Region , y= Confirmed, color = Country_Region)) + geom_point() + theme(legend.position="none") #+ labs( x= "Days", y="Confirmed")
 ```
 
 ### Exercise 6 September
-```{r}
+```{r, eval=FALSE}
 ggplot(data = US2, aes(x = Province_State , y = Deaths , color = Province_State)) + geom_bar(stat="identity") + theme(legend.position = "none")
 ```
-```{r}
+```{r, eval=FALSE}
 ggplot(data = US3, aes(x = Province_State , y = Confirmed , color = Province_State)) + geom_bar(stat="identity") + theme(legend.position = "none")
 ```
 

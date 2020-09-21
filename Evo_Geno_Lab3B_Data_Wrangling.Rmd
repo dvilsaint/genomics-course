@@ -41,7 +41,7 @@ survey %>%
     select(year, sex, weight)
 ```
 ### Ex 2
-```{r}
+```{r, eval=FALSE}
 surveys_hindfoot_cm <- surveys %>%
     filter(!is.na(hindfoot_length)) %>%
     mutate(hindfoot_cm = hindfoot_length / 10) %>%
@@ -50,13 +50,13 @@ surveys_hindfoot_cm <- surveys %>%
 ```
 
 ### Ex 3
-```{r}
+```{r, eval=FALSE}
 surveys %>%
     count(plot_type) 
 ```
 
 ### Ex 4
-```{r}
+```{r, eval=FALSE}
 surveys %>% 
 filter(!is.na(hindfoot_length)) %>%
     group_by(species_id) %>%
@@ -69,7 +69,7 @@ filter(!is.na(hindfoot_length)) %>%
 ```
 
 ### Ex 5
-```{r}
+```{r, eval=FALSE}
 surveys %>%
     filter(!is.na(weight)) %>%
     group_by(year) %>%
@@ -79,7 +79,7 @@ surveys %>%
 ```
 
 ### Ex 6
-```{r}
+```{r, eval=FALSE}
 surveys_spread_genera <- surveys %>%
   group_by(plot_id, year) %>%
   summarize(n_genera = n_distinct(genus)) %>%
@@ -88,31 +88,31 @@ head(surveys_spread_genera)
 ```
 
 ### Ex 7
-```{r}
+```{r, eval=FALSE}
 surveys_spread_genera %>%
   gather("year", "n_genera", -plot_id)
 ```
 
 ### 8
-```{r}
+```{r, eval=FALSE}
 surveys_long <- surveys %>%
   gather("measurement", "value", hindfoot_length, weight)
 ```
 
 ### Ex 9
-```{r}
+```{r, eval=FALSE}
 surveys_long %>%
   group_by(year, measurement, plot_type) %>%
   summarize(mean_value = mean(value, na.rm=TRUE)) %>%
   spread(measurement, mean_value)
 ```
-```{r}
+```{r, eval=FALSE}
 surveys_complete <- survey %>%
   filter(!is.na(weight),           # remove missing weight
          !is.na(hindfoot_length),  # remove missing hindfoot_length
          !is.na(sex))   # remove missing sex
 ```
-```{r}
+```{r, eval=FALSE}
 write_csv(surveys_complete, path = "data/surveys_complete.csv")
 ```
 
