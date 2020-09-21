@@ -36,7 +36,7 @@ survey <- read_csv("data/portal_data_joined.csv")
 ```
 ### Ex 1
 ```{r, echo = FALSE}
-surveys %>%
+survey %>%
     filter(year < 1995) %>%
     select(year, sex, weight)
 ```

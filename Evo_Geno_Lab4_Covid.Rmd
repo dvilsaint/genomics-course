@@ -1,7 +1,7 @@
 ---
 title: "Evo_Geno_Lab4_Covid"
 author: "Danaiijah Vilsaint"
-Date:"9/14/2020"
+Date: "9/14/2020"
 output: html_document
 ---
 

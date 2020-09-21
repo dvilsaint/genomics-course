@@ -1,7 +1,7 @@
 ---
 title: "Evo_Geno_Lab4A"
 author: "Danaiijah Vilsaint"
-Date:"9/14/2020"
+Date: "9/14/2020"
 output: html_document
 ---
 
@@ -28,10 +28,6 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ```{r}
 library(tidyverse)
@@ -77,4 +73,5 @@ ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
     geom_boxplot(alpha = 0) +
     geom_jitter(alpha = 0.3, color = "tomato")
 ```
+
 
