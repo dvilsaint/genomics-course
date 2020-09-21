@@ -31,6 +31,9 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 ```{r}
 library(tidyverse)
 ```
+```{r}
+survey <- read_csv("data/portal_data_joined.csv")
+```
 ### Ex 1
 ```{r, echo = FALSE}
 surveys %>%
@@ -102,5 +105,14 @@ surveys_long %>%
   group_by(year, measurement, plot_type) %>%
   summarize(mean_value = mean(value, na.rm=TRUE)) %>%
   spread(measurement, mean_value)
+```
+```{r}
+surveys_complete <- survey %>%
+  filter(!is.na(weight),           # remove missing weight
+         !is.na(hindfoot_length),  # remove missing hindfoot_length
+         !is.na(sex))   # remove missing sex
+```
+```{r}
+write_csv(surveys_complete, path = "data/surveys_complete.csv")
 ```
 

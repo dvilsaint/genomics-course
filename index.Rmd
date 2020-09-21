@@ -17,6 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 * 3: [Data Wrangling](Evo_Geno_Lab3_Data_Wrangling.Rmd) 
 * 3A: [Data Wrangling](Evo_Geno_Lab3A_Data_Wrangling.Rmd)
 * 3B: [Data Wrangling](Evo_Geno_Lab3B_Data_Wrangling.Rmd)
+* 4:[Covid-19](Evo_Geno_Lab4_Covid.Rmd)
+* 4a[Data Wrangling](Evo_Geno_Lab4a.Rmd)
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
