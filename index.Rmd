@@ -20,6 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * 4 : [Covid-19](Evo_Geno_Lab4_Covid.html)
 * 4a : [Data Wrangling](Evo_Geno_Lab4a.html)
 * 5 : [Covid-19](Evo_Geno_Lab5.html)
+* 5x : [Covid-19](Evo_Geno_Lab5x.html)
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 
 # REFERENCES
