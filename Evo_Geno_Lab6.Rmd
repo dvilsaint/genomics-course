@@ -1,0 +1,342 @@
+---
+title: "Evo_Geno_Lab6"
+author: "Danaiijah Vilsaint"
+date: "9/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+```
+```{r}
+library(maps)
+library(mapdata)
+library(lubridate)
+library(viridis)
+library(wesanderson)
+library(plotly)
+library(RColorBrewer)
+```
+## Ex1: For the above graph “World COVID-19 Confirmed case” summarize the counts for each Country on the graph and update the graph to 9/26/2020. You may need to adjust the size of the points.
+```{r,eval=FALSE}
+library(plotly)
+daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  group_by(Country_Region) %>% 
+  summarize(Confirmed = sum(Confirmed), Deaths = sum(Deaths))
+```
+###Ex2:Update Anisa Dhana’s graph layout of the US to 9/26/2020. You may need to adjust the range or change to a linear scale (delete trans=“log”)
+```{r,}
+daily_report_ex2 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Country_Region == "US") %>% 
+  filter (!Province_State %in% c("Alaska","Hawaii", "American Samoa",
+                  "Puerto Rico","Northern Mariana Islands", 
+                  "Virgin Islands", "Recovered", "Guam", "Grand Princess",
+                  "District of Columbia", "Diamond Princess")) %>% 
+  filter(Lat > 0)
+mybreaks <- c(1, 100, 1000, 10000, 10000)
+ggplot(daily_report_ex2, aes(x = Long, y = Lat, size = Confirmed)) +
+    borders("state", colour = "white", fill = "grey90") +
+    geom_point(aes(x=Long, y=Lat, size=Confirmed, color=Confirmed),stroke=F, alpha=0.7) +
+    scale_size_continuous(name="Cases", trans="log", range=c(1,7), 
+                        breaks=mybreaks, labels = c("1-99",
+                        "100-999", "1,000-9,999", "10,000-99,999", "50,000+")) +
+    scale_color_viridis_c(option="viridis",name="Cases",
+                        trans="log", breaks=mybreaks, labels = c("1-99",
+                        "100-999", "1,000-9,999", "10,000-99,999", "50,000+"))  +
+# Cleaning up the graph
+  
+  theme_void() + 
+    guides( colour = guide_legend()) +
+    labs(title = "Anisa Dhana's lagout for COVID-19 Confirmed Cases in the US'") +
+    theme(
+      legend.position = "bottom",
+      text = element_text(color = "#22211d"),
+      plot.background = element_rect(fill = "#ffffff", color = NA), 
+      panel.background = element_rect(fill = "#ffffff", color = NA), 
+      legend.background = element_rect(fill = "#ffffff", color = NA)
+    ) +
+    coord_fixed(ratio=1.5)
+
+```
+### Ex3:
+Update the above graph “Number of Confirmed Cases by US County” to 9/26/2020 and use a different color scheme or theme
+```{r}
+report_09_26_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  unite(Key, Admin2, Province_State, sep = ".") %>% 
+  group_by(Key) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+  mutate(Key = tolower(Key))
+us_ex3 <- map_data("state")
+counties_ex3 <- map_data("county") %>% 
+  unite(Key, subregion, region, sep = ".", remove = FALSE)
+state_join_ex3 <- left_join(counties_ex3, report_09_26_2020, by = c("Key"))
+ggplot(data = us_ex3, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  # Add data layer
+  borders("state", colour = "black") +
+  geom_polygon(data = state_join_ex3, aes(fill = Confirmed)) +
+  scale_fill_gradientn(colors = brewer.pal(n = 5, name = "Set2"),
+                       breaks = c(1, 10, 100, 1000, 10000, 100000),
+                       trans = "log10", na.value = "White") +
+  ggtitle("Number of Confirmed Cases by US County") +
+  theme_bw() 
+
+```
+### Ex4:Make an interactive plot using a state of your chosing using a theme different from used in the above exammples.
+```{r}
+daily_report_ex4 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Province_State == "California") %>% 
+  group_by(Admin2) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+   mutate(Admin2 = tolower(Admin2))
+us_ex4 <- map_data("state")
+cali_us <- subset(us_ex4, region == "California")
+counties <- map_data("county")
+  cali_county <- subset(counties, region == "California")
+state_join_ex4 <- left_join(cali_county,daily_report_ex4 , by = c("subregion" = "Admin2"))
+ggplot(data = us_ex4, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  # Add data layer
+  borders("state", colour = "black") +
+  geom_polygon(data = state_join_ex4 , aes(fill = Confirmed)) +
+  scale_fill_gradientn(colors = brewer.pal(n = 5, name = "Set2"),
+                       breaks = c(1, 10, 100, 1000, 10000, 100000),
+                       trans = "log10", na.value = "White") +
+  ggtitle("Number of Confirmed Cases of California") +
+  theme_bw() 
+ theme_void() + 
+    guides( colour = guide_legend()) +
+    labs(title = "Number of Confirmed Cases of California'") +
+    theme(
+      legend.position = "bottom",
+      text = element_text(color = "#22211d"),
+      plot.background = element_rect(fill = "#ffffff", color = NA), 
+      panel.background = element_rect(fill = "#ffffff", color = NA), 
+      legend.background = element_rect(fill = "#ffffff", color = NA)
+    )
+```
+### ex5:Create a report with static maps and interactive graphs that is meant to be read by others (e.g. your friends and family). Hide warnings, messages and even the code you used so that it is readable. Included references. Link to the Lab 6 report from your Github site. Submit the link to Moodle. Hide warnings, messages and even the code you used so that it is readable. Included references. Link to the Lab 6 report from your Github site. Submit the link to Moodle. I will talk more about the format on Wed.
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+daily_report1 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-26-2020.csv")) %>% 
+  rename(Long = "Long_") 
+# graphing data
+ggplot(daily_report1, aes(x = Long, y = Lat, size = Confirmed/1000)) +
+    borders("world", colour = NA, fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='blue', fill='red', alpha = 0.5) +
+    labs(title = 'World COVID-19 Confirmed Cases - 3/26/20',x = '', y = '',
+        size="Cases (x1000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)
+```
+
+## World confirmed cases now (9/26/20)
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+### load data from 9.26.20
+daily_report_2 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") 
+ggplot(daily_report_2, aes(x = Long, y = Lat, size = Confirmed/1000000)) +
+    borders("world", colour = NA, fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='blue', fill='red', alpha = 0.5) +
+    labs(title = 'World COVID-19 Confirmed Cases - 9/26/20',x = '', y = '',
+        size="Cases (x1000000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)
+```
+## Visualizing the number of confirmed cases in the US by state from six months ago (3/26/20) and now (9/26/20)
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+Confirmed_State_3_26<-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-26-2020.csv")) %>%
+  filter (Country_Region == "US") %>% 
+  group_by(Province_State, Country_Region) %>% 
+  summarise(Confirmed = sum(Confirmed)) 
+Confirmed_State_9_26 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  filter (Country_Region == "US") %>% 
+  group_by(Province_State, Country_Region) %>% 
+  summarise(Confirmed = sum(Confirmed)) 
+Confirmed_State_9_26 <- Confirmed_State_9_26 %>% 
+  filter(Province_State != "Recovered") 
+Confirmed_State_3_26_9_26_joined <- full_join(
+      Confirmed_State_9_26,Confirmed_State_3_26, by = c("Province_State"))
+Confirmed_State_3_26_9_26_joined <- full_join(
+      Confirmed_State_9_26, Confirmed_State_3_26, by = c("Province_State")) %>% 
+      rename(Confirmed_3_26_2020 = "Confirmed.x", Confirmed_9_26_2020 = "Confirmed.y") %>% 
+      select(-Country_Region.x, -Country_Region.y) %>% 
+      replace_na(list(Confirmed_3_26_2020 = 0))
+# which(is.na(Confirmed_State_6_13_9_13_joined))
+Confirmed_State_3_26_9_26_joined_long <- Confirmed_State_3_26_9_26_joined %>% 
+              pivot_longer(-c(Province_State),
+                            names_to = "Date", values_to = "Confirmed")
+ggplotly(
+  ggplot(Confirmed_State_3_26_9_26_joined_long, aes(x = Confirmed,  y = Province_State))  + geom_bar(stat="identity",aes(color = Date)) +  labs(title="COVID-19 Confirmed Cases in US",
+        x ="Number of Confirmed Cases", y = "State/Province in US")
+ )
+```
+```{r, daily_report1_us, echo = FALSE, message = FALSE, warning = FALSE}
+daily_report_3 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Country_Region == "US") %>% 
+  filter (!Province_State %in% c("Alaska","Hawaii", "American Samoa",
+                  "Puerto Rico","Northern Mariana Islands", 
+                  "Virgin Islands", "Recovered", "Guam", "Grand Princess",
+                  "District of Columbia", "Diamond Princess")) %>% 
+  filter(Lat > 0)
+ggplot(daily_report_3, aes(x = Long, y = Lat, size = Confirmed/1000)) +
+    borders("state", colour = "black", fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='blue', fill='purple', alpha = 0.5) +
+    labs(title = 'COVID-19 Confirmed Cases in the US - 3/26/20', x = '', y = '',
+        size="Cases (x1000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)
+```
+
+## US confirmed cases now (9/26/20)
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+daily_report_3 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Country_Region == "US") %>% 
+  filter (!Province_State %in% c("Alaska","Hawaii", "American Samoa",
+                  "Puerto Rico","Northern Mariana Islands", 
+                  "Virgin Islands", "Recovered", "Guam", "Grand Princess",
+                  "District of Columbia", "Diamond Princess")) %>% 
+  filter(Lat > 0)
+ggplot(daily_report_3, aes(x = Long, y = Lat, size = Confirmed/1000)) +
+    borders("state", colour = "black", fill = "grey90") +
+    theme_bw() +
+    geom_point(shape = 21, color='blue', fill='purple', alpha = 0.5) +
+    labs(title = 'COVID-19 Confirmed Cases in the US - 3/26/20', x = '', y = '',
+        size="Cases (x1000))") +
+    theme(legend.position = "right") +
+    coord_fixed(ratio=1.5)
+```
+
+# Comparing the US confirmed cases from six months ago and now based on county
+
+## Looking at the US six months ago based on county (3/26/20)
+```{r, county_report1, echo = FALSE, message = FALSE, warning = FALSE}
+# Get and format the covid report data
+report_03_26_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  unite(Key, Admin2, Province_State, sep = ".") %>% 
+  group_by(Key) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+  mutate(Key = tolower(Key))
+# get and format the map data
+us <- map_data("state")
+counties <- map_data("county") %>% 
+  unite(Key, subregion, region, sep = ".", remove = FALSE)
+# Join the 2 tibbles
+state_join <- left_join(counties, report_03_26_2020, by = c("Key"))
+# sum(is.na(state_join$Confirmed))
+ggplot(data = us, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  # Add data layer
+  borders("state", colour = "black") +
+  geom_polygon(data = state_join, aes(fill = Confirmed)) +
+  scale_fill_gradientn(colors = brewer.pal(n = 5, name = "PuRd"),
+                       breaks = c(1, 10, 100, 1000, 10000, 100000),
+                       trans = "log10", na.value = "White") +
+  ggtitle("Number of Confirmed Cases by US County") +
+  theme_bw() 
+```
+
+## Looking at the US now based on county (9/26/20)
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
+# Get and format the covid report data
+report_09_26_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  unite(Key, Admin2, Province_State, sep = ".") %>% 
+  group_by(Key) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+  mutate(Key = tolower(Key))
+# get and format the map data
+us <- map_data("state")
+counties <- map_data("county") %>% 
+  unite(Key, subregion, region, sep = ".", remove = FALSE)
+# Join the 2 tibbles
+state_join <- left_join(counties, report_09_26_2020, by = c("Key"))
+# sum(is.na(state_join$Confirmed))
+ggplot(data = us, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  # Add data layer
+  borders("state", colour = "black") +
+  geom_polygon(data = state_join, aes(fill = Confirmed)) +
+  scale_fill_gradientn(colors = brewer.pal(n = 5, name = "PuRd"),
+                       breaks = c(1, 10, 100, 1000, 10000, 100000),
+                       trans = "log10", na.value = "White") +
+  ggtitle("Number of Confirmed Cases by US County") +
+  theme_bw() 
+```
+
+## Confirmed cases in California from six months ago (3/26/20)
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+daily_report_ex4 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Province_State == "California") %>% 
+  group_by(Admin2) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+  mutate(Admin2 = tolower(Admin2))
+us_ex4 <- map_data("state")
+cali_us <- subset(us_ex4, region == "California")
+counties <- map_data("county")
+cali_county <- subset(counties, region == "California")
+state_join_ex4 <- left_join(cali_county, daily_report_ex4, by = c("subregion" = "Admin2")) 
+# plot state map
+ggplotly(
+  ggplot(data = cali_county, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+# Add data layer
+  geom_polygon(data = state_join_ex4, aes(fill = Confirmed), color = "black") +
+    scale_fill_gradientn(colours = 
+                         wes_palette("FantasticFox1", 100, type = "continuous")) +
+  ggtitle("COVID-19 Cases in California on 9/26/20") +
+  labs(x=NULL, y=NULL) +
+  theme(panel.border = element_blank()) +
+  theme(panel.background = element_blank()) +
+  theme(axis.ticks = element_blank()) +
+  theme(axis.text = element_blank())
+)
+```
+
+## Confirmed cases in California now (9/26/20)
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+### Make an interactive plot using a state of your choosing using a theme different from used in the above examples.
+daily_report_ex4 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
+  rename(Long = "Long_") %>% 
+  filter(Province_State == "California") %>% 
+  group_by(Admin2) %>% 
+  summarize(Confirmed = sum(Confirmed)) %>% 
+  mutate(Admin2 = tolower(Admin2))
+us_ex4 <- map_data("state")
+cali_us <- subset(us_ex4, region == "California")
+counties <- map_data("county")
+cali_county <- subset(counties, region == "California")
+state_join_ex4 <- left_join(cali_county, daily_report_ex4, by = c("subregion" = "Admin2")) 
+# plot state map
+ggplotly(
+  ggplot(data = cali_county, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+# Add data layer
+  geom_polygon(data = state_join_ex4, aes(fill = Confirmed), color = "black") +
+    scale_fill_gradientn(colours = 
+                         wes_palette("FantasticFox1", 100, type = "continuous")) +
+  ggtitle("COVID-19 Cases in California - 9/26/20") +
+# Cleaning up the graph
+  labs(x=NULL, y=NULL) +
+  theme(panel.border = element_blank()) +
+  theme(panel.background = element_blank()) +
+  theme(axis.ticks = element_blank()) +
+  theme(axis.text = element_blank())
+)
+```
+Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015]. Data aquired from [@JohnsHopkinsUniversity].
+#Reference
