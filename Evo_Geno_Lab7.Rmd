@@ -1,0 +1,44 @@
+---
+title: "Evo_Geno_Lab7"
+author: "Danaiijah Vilsaint"
+date: "10/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(BiocStyle)
+```
+
+```{r}
+library(knitr)
+opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
+               cache = FALSE, fig.width = 5, fig.height = 5)
+```
+### Install Bioconductor and the above packages
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("rnaseqGene")
+```
+```{r}
+BiocManager::install("airway")
+```
+```{r}
+BiocManager::install("tximeta")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

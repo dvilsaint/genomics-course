@@ -1,0 +1,48 @@
+---
+title: "Evo_Geno_Lab7x"
+author: "Danaiijah Vilsaint"
+date: "10/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{sh, eval=FALSE}
+pwd
+```
+```{sh., eval=FALSE}
+mkdir MYDRAFTS
+```
+
+```{sh., eval=FALSE}
+cd MYDRAFTS
+```
+```{sh, eval=FALSE}
+ls -a
+```
+
+```{sh, eval=FALSE}
+ls -a
+```
+
+```{sh, eval=FALSE}
+cp draft.txt draft_old.txt
+```
+```{sh, eval=FALSE}
+rm draft_old.txt
+```
+```{sh, eval=FALSE}
+cd ..
+```
+```{sh, eval=FALSE}
+rm -r MYDRAFTS
+```
+```{r}
+names(knitr::knit_engines$get())
+```
+
+
+
+
+
