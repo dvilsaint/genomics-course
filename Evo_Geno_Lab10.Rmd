@@ -1,0 +1,70 @@
+---
+title: "Evo_Geno_Lab10"
+author: "Danaiijah Vilsaint"
+date: "11/2/2020"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(stringr)
+library(tidyverse)
+library(vcfR)
+```
+
+```{r}
+data(vcfR_example)
+vcf
+```
+
+## Ex 1
+```{r}
+?read.vcfR
+```
+
+## Ex 2
+```{r}
+queryMETA(vcf, element = 'AD')
+```
+
+## Ex 3
+```{r}
+tail(vcf@fix)
+```
+
+## Ex 4
+```{r}
+plot(vcf)
+```
+
+## Ex 5
+```{r}
+colnames(vcf@gt)
+```
+
+## Ex 6
+```{r}
+plot(getPOS(vcf), myDiff$Gprimest,  pch = 20, col = "#1E90FF44", xlab = "", ylab = "", ylim = c(0, 1), xaxt = "n")
+axis(side = 1, at = seq(0, 1e5, by = 1e4), labels = seq(0, 100, by = 10))
+title(xlab='Genomic position (Kbp)')
+title(ylab = expression(italic("G'"["ST"])))
+```
+
+## Ex 7
+```{r}
+table(pop)
+```
+
+## Ex 8
+```{r}
+chromoqc(chrom, dp.alpha = 66, xlim = c(2e05, 4e05))
+```
+## Ex 9
+```{r}
+queryMETA(vcf)
+```
+

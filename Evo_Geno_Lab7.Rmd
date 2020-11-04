@@ -21,13 +21,17 @@ opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
 ```{r}
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
-BiocManager::install("rnaseqGene")
-```
-```{r}
+BiocManager::install("rnaseqGene")y
 BiocManager::install("airway")
+BiocManager::install("tximeta")
+BiocManager::install("DESeq2")
+BiocManager::install("Gviz")
+BiocManager::install("sva")
+BiocManager::install("RUVSeq")
+BiocManager::install("fission")
 ```
 ```{r}
-BiocManager::install("tximeta")
+library(rmarkdown)
 ```
 
 

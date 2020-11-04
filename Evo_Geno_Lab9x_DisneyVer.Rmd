@@ -1,0 +1,134 @@
+---
+title: "Evo_Geno_Lab9x"
+author: "Danaiijah Vilsaint"
+date: "10/28/2020"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+library(knitr)
+```
+
+
+
+```{r}
+x=1
+if (x == 1) { y = 3
+       
+} else {y = 2}
+y
+```
+## example of a valid if/else structure
+```{r}
+## Generate a uniform random number
+x <- runif(1, 0, 10)  
+if(x > 3) {
+        y <- 10
+} else {
+        y <- 0
+}
+```
+
+
+
+##Loops
+```{r}
+for(i in 1:13) {
+        print(i)
+}
+```
+## Print out each element of 'x'
+```{r}
+x <- c("Frozen", "Moana", "Coco", "Tangled")
+for(i in 1:4) {
+        print(x[i])  
+}
+
+```
+## Generate a sequence based on length of 'x'
+```{r}
+for(i in seq_along(x)) {   
+        print(x[i])
+}
+```
+
+##
+```{r}
+for(letter in x) {
+        print(letter)
+}
+```
+##For one line loops, the curly braces are not strictly necessary.
+```{r}
+for(i in 1:4) print(x[i])
+```
+
+## Nested for loops
+```{r}
+x <- matrix(1:6, 2, 3)
+for(i in seq_len(nrow(x))) {
+        for(j in seq_len(ncol(x))) {
+                print(x[i, j])
+        }   
+}
+```
+## while Loops
+```{r}
+count <- 0
+while(count < 10) {
+        print(count)
+        count <- count + 1
+}
+```
+##Sometimes there will be more than one condition in the test.
+```{r}
+z <- 5
+set.seed(1)
+while(z >= 3 && z <= 10) {
+        coin <- rbinom(1, 1, 0.5)
+        
+        if(coin == 1) {  ## random walk
+                z <- z + 1
+        } else {
+                z <- z - 1
+        } 
+}
+print(z)
+```
+
+
+## non-trivial function body
+```{r}
+f <- function() 
+{cat("How Far I'll Go!\n")}
+f()
+```
+## function arguments:determines how many times “Hello, world!” is printed to the console
+```{r}
+f <- function(num)
+{for(i in seq_len(num))
+cat("Into The Unknown!\n")}
+f(3)
+```
+## This next function returns the total number of characters printed to the console
+```{r}
+f <- function(num = 4) 
+{ Poco <- "Un Poco Loco!\n"
+for(i in seq_len(num)) 
+{cat(Poco)}
+chars <- nchar(Poco) * num 
+chars}
+ meaningoflife <- f(3)
+print(meaningoflife)
+```
+## named arguments 
+```{r}
+f(num = 2)
+```
+
+

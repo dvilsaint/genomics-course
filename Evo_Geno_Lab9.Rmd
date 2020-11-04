@@ -1,0 +1,54 @@
+---
+title: "Evo_Geno_Lab9"
+author: "Danaiijah Vilsaint"
+date: "10/26/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(stringr)
+library(tidyverse)
+```
+
+### 14.3.1 Basic matches
+```{r, exact strings}
+x <- c("apple", "banana", "pear")
+str_view(x, "an")
+str_view(x, ".a.")
+```
+
+
+##14.3.1.1 Exercises 1
+```{r}
+"\", "\\", "\\\"
+#They dont match because there is not of the slashes you need for of them represent one
+```
+
+
+##14.3.2 Anchors
+```{r}
+x <- c("apple", "banana", "pear")
+str_view(x, "^a")
+```
+```{r}
+str_view(x, "e$")
+```
+##EX1
+```{r}
+You match the literal string "$^$"?
+```
+##14.3.3 Character classes and alternatives
+
+14.3.4 Repetition
+14.3.5 Grouping and backreferences
+14.4.1 Detect matches
+14.4.2 Extract matches
+14.4.3 Grouped matches
+14.4.4 Replacing matches
+14.4.5 Splitting
+14.7 stringi
+
