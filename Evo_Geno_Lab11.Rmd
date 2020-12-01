@@ -1,0 +1,38 @@
+---
+title: "Evo_Geno_Lab11"
+author: "Danaiijah Vilsaint"
+date: "11/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+BiocManager::install("phyloseq")
+BiocManager::install("dada2")
+BiocManager::install("DECIPHER")
+```
+
+```{r}
+path<-"data/MiSeq_SOP"
+list.files(path)
+```
+```{r}
+library(tidyverse)
+library(dada2)
+library(DECIPHER)
+library(phyloseq)
+```
+
+
+
+```{r, eval=FALSE}
+taxa <- assignTaxonomy(seqtab.nochim, "data/silva_nr99_v138_train_set.fa.gz", multithread=TRUE)
+```
+```{r}
+dna <- DNAStringSet(getSequences(seqtab.nochim)) # Create a DNAStringSet from the ASVs
+load("data/SILVA_SSU_r138_2019.RData") # CHANGE TO THE PATH OF YOUR TRAINING SET
+```
+

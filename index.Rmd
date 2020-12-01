@@ -22,10 +22,14 @@ knitr::opts_chunk$set(echo = TRUE)
 * 5x : [Covid-19](Evo_Geno_Lab5x.html)
 * 6 : [Covid-19](Evo_Geno_Lab6.html)
 * 7 : [RNA-Seq workflow](Evo_Geno_Lab7.html)
-* 8 :[NCBI databasesFile](Evo_Geno_Lab8.Rmd)
-* 9 :[ Programming in R - Regular Expressions](Evo_Geno_Lab9.Rmd)
+* 8 :[NCBI databasesFile](Evo_Geno_Lab8.html)
+* 9 :[ Programming in R - Regular Expressions](Evo_Geno_Lab9.html)
 * 9x :[Programming in R - Control Structures and Functions](Evo_Geno_Lab9x_DisneyVer.html)
-
+* 10 : [genomics based on high throughput sequencing (HTS)](Evo_Geno_Lab10.html)
+* 11 : [Microbiome Analysis using data2 and phyloseq](Evo_Geno_Lab11.html)
+* 11x : [Microbiome Analysis using phyloseq](Evo_Geno_Lab11x.html)
+* 12 : [ Network Analysis using Cytoscape and RCy](Evo_Geno_Lab12.html)
+* 13: [Sprucing up your Rmarkdown and GitHub Page]
 
 
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].

@@ -1,0 +1,24 @@
+---
+title: "Evo_Geno_Lab12"
+author: "Danaiijah Vilsaint"
+date: "11/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+BiocManager::install("RCy3")
+```
+
+
+
+## Final Graph of Basic Data Visualization
+![Final Graph of Basic Data Visualization](Basic Data Visualization.png)
+
+## Final Graph of Differentially Expressed Genes
+![Final Graph](Differentially Expressed Genes.png)
+## Final Graph of RCy3
+![Final Graph](vignette_image.png)
+
