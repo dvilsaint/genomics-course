@@ -1,5 +1,6 @@
 ---
 title: "Lab 2"
+author: "Danaiijah Vilsaint"
 output: html_document
 ---
 

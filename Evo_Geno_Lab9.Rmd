@@ -3,6 +3,7 @@ title: "Evo_Geno_Lab9"
 author: "Danaiijah Vilsaint"
 date: "10/26/2020"
 output: html_document
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +25,7 @@ str_view(x, ".a.")
 
 ##14.3.1.1 Exercises 1
 ```{r}
-"\", "\\", "\\\"
+
 #They dont match because there is not of the slashes you need for of them represent one
 ```
 
@@ -39,16 +40,86 @@ str_view(x, "e$")
 ```
 ##EX1
 ```{r}
-You match the literal string "$^$"?
+#You match the literal string "$^$"?
 ```
-##14.3.3 Character classes and alternatives
+##14.3.3.1 Character classes and alternatives
+##Create regular expressions to find all words that:
+Start with a vowel.
+That only contain consonants. (Hint: thinking about matching “not”-vowels.)
+End with ed, but not with eed.
+End with ing or ise.
+```{r}
+x <- c("bed", "reading", "ng","apple","arise")
+str_view(x, "ing$")
+```
+```{r}
+str_view(x, "ing$")
+```
+```{r}
+str_view(x, "[aeiou]")
+```
+
 
 14.3.4 Repetition
+## Describe the equivalents of ?, +, * in {m,n} form.
+```{r}
+# ?: {0,1}
+str_view(x, "C{0,1}")
+str_view(x, 'C{0,1}?')
+# +: {1,}
+str_view(x, "C{1,}")
+str_view(x, "C+")
+# *: {0,}
+str_view(x, "C{0,}")
+str_view(x, "C*")
+```
+```
+
 14.3.5 Grouping and backreferences
+## Describe, in words, what these expressions will match:
+(.)\1\1
+"(.)(.)\\2\\1"
+(..)\1
+"(.).\\1.\\1"
+"(.)(.)(.).*\\3\\2\\1"
+
+```{r}
+## They match words that have repetition within it
+```
+
 14.4.1 Detect matches
+## For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple str_detect() calls.
+Find all words that start or end with x.
+Find all words that start with a vowel and end with a consonant.
+Are there any words that contain at least one of each different vowel?
+```{r}
+x <- c(" What can I say except Youre welcome For the tides the sun the sky Hey it is okay  it is okay Youre welcome Im just an ordinary demi guy")
+# Replace all forward slashes in a string with backslashes.
+```
+
 14.4.2 Extract matches
+## In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a colour. Modify the regex to fix the problem.
+```{r}
+
+```
+
 14.4.3 Grouped matches
-14.4.4 Replacing matches
+```{r}
+# Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.
+numbers1 <- "\\b(one|two|three|four|five|six|seven|eight|nine|ten) +(\\w+)"
+sentences[str_detect(sentences, numbers1)] %>%
+  str_extract(numbers1)
+```
+
+
 14.4.5 Splitting
-14.7 stringi
+```{r}
+```{r, exercise10}
+# Split up a string like “apples, pears, and bananas” into individual components.
+y <- "apples, pears, and bananas."
+str_view_all(y, boundary("word"))
+```
+```
+
+
 

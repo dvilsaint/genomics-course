@@ -1,0 +1,16 @@
+---
+title: "Evo_Geno_Lab12"
+author: "Danaiijah Vilsaint"
+date: "11/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(RCy3)
+cytoscapePing()
+```
+
+

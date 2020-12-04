@@ -9,7 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
 ```{r}
 library(tidyverse)
@@ -18,14 +17,14 @@ library(tidyverse)
 library(lubridate)
 ```
 ## Confirmed
-```{r,eval=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 time_series_confirmed_long<- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")) %>%
   rename(Province_State = "Province/State", Country_Region = "Country/Region")  %>% 
                pivot_longer(-c(Province_State, Country_Region, Lat, Long),
                              names_to = "Date", values_to = "Confirmed")
 ```
 ### Deaths
-```{r,eval=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 time_series_deaths_long <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")) %>%
   rename(Province_State = "Province/State", Country_Region = "Country/Region")  %>% 
   pivot_longer(-c(Province_State, Country_Region, Lat, Long),
@@ -33,7 +32,7 @@ time_series_deaths_long <- read_csv(url("https://raw.githubusercontent.com/CSSEG
 ```
 
 ##Key
-```{r,eval=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 time_series_confirmed_long <- time_series_confirmed_long %>% 
   unite(Key, Province_State, Country_Region, Date, sep = ".", remove = FALSE)
 time_series_deaths_long <- time_series_deaths_long %>% 
@@ -41,18 +40,18 @@ time_series_deaths_long <- time_series_deaths_long %>%
   select(Key, Deaths)
 ```
 ##Join tables
-```{r,eval=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 time_series_long_joined <- full_join(time_series_confirmed_long,
     time_series_deaths_long, by = c("Key")) %>% 
     select(-Key)
 ```
 ##Reformat the data
-```{r,eval=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 time_series_long_joined$Date <- mdy(time_series_long_joined$Date)
 ```
 
 ## Create Report table with counts not working
-```{r, code=FALSE}
+```{,echo = FALSE, message = FALSE, warning = FALSEr}
 pivot_longer(-c( Province_State, Country_Region, Lat, Long, Date),
                names_to = "Report_Type", values_to = "Counts")
 ```
@@ -71,7 +70,7 @@ library(gifski)
 
 
 
-```{r, code=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 data_time <- time_series_long_joined %>% 
     group_by(Country_Region,Date) %>% 
     summarise_at(c("Confirmed", "Deaths"), sum) %>% 
@@ -84,7 +83,7 @@ p<- ggplot(data_time, aes(x = Date,  y = Confirmed, color = Country_Region)) +
   transition_reveal(Date)
 animate(p,renderer = gifski_renderer(),end_pause = 15) 
 ```
-```{r,code=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 data_time <- time_series_long_joined %>% 
     group_by(Country_Region,Date) %>% 
     summarise_at(c("Confirmed", "Deaths"), sum) %>% 
@@ -98,7 +97,7 @@ p <- ggplot(data_time, aes(x = Date,  y = Confirmed, color = Country_Region)) +
 animate(p,renderer = gifski_renderer(),end_pause = 15) 
 ```
 ## Challenge 1:Print a graph (different from the one above) to a png file using 3*ppi for the height and width and display the png file in the report using the above R Markdown format.
-```{r, exercise1, fig.width = 3, fig.height = 3,code=FALSE}
+```{r, exercise1, fig.width = 3, fig.height = 3,echo = FALSE, message = FALSE, warning = FALSE}
 data_time <- time_series_long_joined %>% 
     group_by(Country_Region,Date) %>% 
     summarise_at(c("Confirmed", "Deaths"), sum) %>% 
@@ -112,8 +111,10 @@ p <- ggplot(data_time, aes(x = Date,  y = Confirmed, color = Country_Region)) +
 animate(p,renderer = gifski_renderer(),end_pause = 15) 
 ```
 ## Challenge 2 : Turn one of the exercises from Lab 5 into an interactive graph with plotyly
-```{r, code=FALSE}
-Confirmed <- time_series_long_joined %>% arrange(desc(Confirmed)) %>% slice(1:10)
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
+Confirmed <-time_series_long_joined %>% 
+  arrange(desc(Confirmed)) %>% 
+  slice(1:10)
 time_series_long_joined %>% 
     group_by(Country_Region,Date) %>% 
     summarise_at(c("Confirmed", "Deaths"), sum) %>% 
@@ -122,14 +123,14 @@ time_series_long_joined %>%
    p<- ggplot(data_time,aes(x = Date,  y = Deaths, color = Country_Region)) + 
     geom_point() +
     geom_line() +
-    ggtitle("COVID-19 Deaths")
-geom_point(aes(group = seq_along(Date))) +
-      transition_reveal(Date)
+    ggtitle("COVID-19 Deaths") +
+geom_point(aes(group = seq_along(Date))) + 
+  transition_reveal(Date)
 animate(p,renderer = gifski_renderer(),end_pause = 15) 
 ```
 
 ## Challenge 3: Create an animated graph of your choosing using the time series data to display an aspect (e.g. states or countries) of the data that is important to you.
-```{r,code=FALSE}
+```{r,echo = FALSE, message = FALSE, warning = FALSE}
 data_time <- time_series_long_joined %>% 
     group_by(Country_Region,Date) %>% 
     summarise_at(c("Confirmed", "Deaths"), sum) %>% 
@@ -142,3 +143,4 @@ p<- ggplot(data_time, aes(x = Date,  y = Confirmed, color = Country_Region)) +
   transition_reveal(Date)
 animate(p,renderer = gifski_renderer(),end_pause = 15) 
 ```
+#Reference
