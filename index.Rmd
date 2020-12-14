@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * 9 :[ Programming in R - Regular Expressions](Evo_Geno_Lab9.html)
 * 9x :[Programming in R - Control Structures and Functions](Evo_Geno_Lab9x_DisneyVer.html)
 * 10 : [genomics based on high throughput sequencing (HTS)](Evo_Geno_Lab10.html)
-* 11 : [Microbiome Analysis using data2 and phyloseq](Evo_Geno_Lab11.html)
+* 11 : [Microbiome Analysis using data2 and phyloseq](Evo_Geno_Lab11_dada2.Rmd)
 * 11x : [Microbiome Analysis using phyloseq](Evo_Geno_Lab11x.html)
 * 12 : [ Network Analysis using Cytoscape and RCy](Evo_Geno_Lab12.html)
 * 13: [Sprucing up your Rmarkdown and GitHub Page]
